@@ -5,8 +5,8 @@ import {
   FaPrescriptionBottleMedical,
 } from "react-icons/fa6";
 
-const TaskCard = ({ task, onTaskEdit, onDeleteTask }) => {
-  const { id, title, description, tags, priority, isFavorite } = task;
+const TaskCard = ({ task, onTaskEdit, onDeleteTask, onBookMark }) => {
+  const { id, title, description, tags, priority, isBookMark } = task;
   return (
     <article className="flex bg-white rounded-sm">
       <div className="flex flex-col flex-1 p-6">
@@ -25,20 +25,20 @@ const TaskCard = ({ task, onTaskEdit, onDeleteTask }) => {
           ))}
         </div>
         <div className="flex flex-wrap justify-between pt-3 space-x-2 cursor-pointer text-lg">
-          {isFavorite ? (
-            <FaBookmark className="text-yellow-400" />
-          ) : (
-            <FaBookmark />
-          )}
+          <button onClick={() => onBookMark(id)}>
+            {isBookMark ? (
+              <FaBookmark className="text-yellow-400" />
+            ) : (
+              <FaBookmark />
+            )}
+          </button>
           <div className="flex gap-2 ">
-            <FaPenToSquare
-              className="text-blue-600 hover:text-blue-500"
-              onClick={() => onTaskEdit(task)}
-            />
-            <FaPrescriptionBottleMedical
-              className="text-red-600 hover:text-red-500"
-              onClick={() => onDeleteTask(id)}
-            />
+            <button onClick={() => onTaskEdit(task)}>
+              <FaPenToSquare className="text-blue-600 hover:text-blue-500" />
+            </button>
+            <button onClick={() => onDeleteTask(id)}>
+              <FaPrescriptionBottleMedical className="text-red-600 hover:text-red-500" />
+            </button>
           </div>
         </div>
       </div>

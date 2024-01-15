@@ -51,6 +51,19 @@ const TaskBoard = () => {
     setTasks([...tasks]);
   }
 
+  // ---> handle book mark
+  function handleBookMark(id) {
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, isBookMark: !task.isBookMark };
+        } else {
+          return task;
+        }
+      })
+    );
+  }
+
   return (
     <main className="p-4 bg-gray-700 h-full  ">
       {isModelOpen && (
@@ -80,6 +93,7 @@ const TaskBoard = () => {
               task={task}
               onTaskEdit={handleEditTask}
               onDeleteTask={handleDeleteTask}
+              onBookMark={handleBookMark}
             />
           ))}
         </section>

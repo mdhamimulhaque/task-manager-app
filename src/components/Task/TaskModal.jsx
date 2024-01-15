@@ -8,7 +8,7 @@ const TaskModal = ({ onTaskSave, onModalClose, onTaskToUpdate }) => {
       description: "",
       tags: [],
       priority: "",
-      isFavorite: false,
+      isBookMark: false,
     }
   );
 
