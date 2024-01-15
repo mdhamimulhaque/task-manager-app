@@ -1,8 +1,12 @@
-import SearchBox from "./conponents/SearchBox";
-import TaskActions from "./conponents/Task/TaskActions";
-import TaskCard from "./conponents/Task/TaskCard";
+import { useState } from "react";
+import SearchBox from "./components/SearchBox";
+import TaskActions from "./components/Task/TaskActions";
+import TaskCard from "./components/Task/TaskCard";
+import { defaultTaskData } from "./data/defaultTaskData";
 
-const App = () => {
+const TaskBoard = () => {
+  const [tasks, setTasks] = useState([defaultTaskData]);
+
   return (
     <main className="p-4 bg-gray-700 h-full ">
       <div className="container mx-auto border-2 border-gray-400 h-screen px-4 pb-4">
@@ -11,10 +15,12 @@ const App = () => {
         </h2>
         <SearchBox />
         <TaskActions />
-        <TaskCard />
+        {tasks?.map((task) => (
+          <TaskCard key={task.id} task={task} />
+        ))}
       </div>
     </main>
   );
 };
 
-export default App;
+export default TaskBoard;
