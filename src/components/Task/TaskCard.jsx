@@ -5,7 +5,7 @@ import {
   FaPrescriptionBottleMedical,
 } from "react-icons/fa6";
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ task, onTaskEdit }) => {
   const { title, description, tags, priority, isFavorite } = task;
   return (
     <article className="flex bg-white rounded-sm">
@@ -25,9 +25,16 @@ const TaskCard = ({ task }) => {
           ))}
         </div>
         <div className="flex flex-wrap justify-between pt-3 space-x-2 cursor-pointer text-lg">
-          <FaBookmark className="text-yellow-400" />
+          {isFavorite ? (
+            <FaBookmark className="text-yellow-400" />
+          ) : (
+            <FaBookmark />
+          )}
           <div className="flex gap-2 ">
-            <FaPenToSquare className="text-blue-600 hover:text-blue-500" />
+            <FaPenToSquare
+              className="text-blue-600 hover:text-blue-500"
+              onClick={() => onTaskEdit(task)}
+            />
             <FaPrescriptionBottleMedical className="text-red-600 hover:text-red-500" />
           </div>
         </div>

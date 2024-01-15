@@ -1,15 +1,21 @@
 import { useState } from "react";
 
-const TaskModal = ({ onTaskSave, onModalClose }) => {
-  const [task, setTask] = useState({
-    id: crypto.randomUUID(),
-    title: "",
-    description: "",
-    tags: [],
-    priority: "",
-    isFavorite: false,
-  });
+const TaskModal = ({ onTaskSave, onModalClose, onTaskToUpdate }) => {
+  const [task, setTask] = useState(
+    onTaskToUpdate || {
+      id: crypto.randomUUID(),
+      title: "",
+      description: "",
+      tags: [],
+      priority: "",
+      isFavorite: false,
+    }
+  );
 
+  // ---> checked mode (add or edit mode)
+  const [isAddTask, setIsAddTask] = useState(Object.is(onTaskToUpdate, null));
+
+  // ---> collect task value
   function handleAddTaskValue(e) {
     const name = e.target.name;
     let value = e.target.value;
@@ -27,7 +33,7 @@ const TaskModal = ({ onTaskSave, onModalClose }) => {
   return (
     <form className="mx-auto w-full max-w-[740px] rounded-xl border border-gray-400 bg-[#191D26] p-9 max-md:px-4 lg:my-10 lg:p-12">
       <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
-        Add New Task
+        {isAddTask ? "Add New Task" : "Edit Task"}
       </h2>
 
       <div className="space-y-5 text-white">
@@ -101,9 +107,9 @@ const TaskModal = ({ onTaskSave, onModalClose }) => {
         <button
           type="button"
           className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:bg-blue-500"
-          onClick={() => onTaskSave(task)}
+          onClick={() => onTaskSave(task, isAddTask)}
         >
-          Create new Task
+          {isAddTask ? "Create New Task" : "Update Task"}
         </button>
       </div>
     </form>
