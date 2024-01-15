@@ -5,8 +5,8 @@ import {
   FaPrescriptionBottleMedical,
 } from "react-icons/fa6";
 
-const TaskCard = ({ task, onTaskEdit }) => {
-  const { title, description, tags, priority, isFavorite } = task;
+const TaskCard = ({ task, onTaskEdit, onDeleteTask }) => {
+  const { id, title, description, tags, priority, isFavorite } = task;
   return (
     <article className="flex bg-white rounded-sm">
       <div className="flex flex-col flex-1 p-6">
@@ -35,7 +35,10 @@ const TaskCard = ({ task, onTaskEdit }) => {
               className="text-blue-600 hover:text-blue-500"
               onClick={() => onTaskEdit(task)}
             />
-            <FaPrescriptionBottleMedical className="text-red-600 hover:text-red-500" />
+            <FaPrescriptionBottleMedical
+              className="text-red-600 hover:text-red-500"
+              onClick={() => onDeleteTask(id)}
+            />
           </div>
         </div>
       </div>

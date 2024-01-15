@@ -30,6 +30,7 @@ const TaskBoard = () => {
   // ---> handle close task
   function handleModalClose() {
     setIsModelOpen(false);
+    setTaskToUpdate(null);
   }
 
   // ---> handle edit task
@@ -37,6 +38,19 @@ const TaskBoard = () => {
     setTaskToUpdate(editTask);
     setIsModelOpen(true);
   }
+
+  // ---> handle delete task
+  function handleDeleteTask(id) {
+    const remainTask = tasks.filter((task) => task.id !== id);
+    setTasks(remainTask);
+  }
+
+  // ---> handle delete all task
+  function handleDeleteAllTask() {
+    tasks.length = 0;
+    setTasks([...tasks]);
+  }
+
   return (
     <main className="p-4 bg-gray-700 h-full  ">
       {isModelOpen && (
@@ -55,10 +69,18 @@ const TaskBoard = () => {
         </h2>
 
         <SearchBox />
-        <TaskActions onModalActionClick={() => setIsModelOpen(true)} />
+        <TaskActions
+          onModalActionClick={() => setIsModelOpen(true)}
+          onDeleteAllTask={handleDeleteAllTask}
+        />
         <section className="py-4 sm:py-6 grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
           {tasks?.map((task) => (
-            <TaskCard key={task.id} task={task} onTaskEdit={handleEditTask} />
+            <TaskCard
+              key={task.id}
+              task={task}
+              onTaskEdit={handleEditTask}
+              onDeleteTask={handleDeleteTask}
+            />
           ))}
         </section>
       </div>
