@@ -64,6 +64,14 @@ const TaskBoard = () => {
     );
   }
 
+  // ---> handle search functionality
+  function handleSearchTask(searchTerm) {
+    const searchResult = tasks.filter((task) =>
+      task?.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setTasks([...searchResult]);
+  }
+
   return (
     <main className="p-4 bg-gray-700 h-full  ">
       {isModelOpen && (
@@ -81,22 +89,26 @@ const TaskBoard = () => {
           Task manager app
         </h2>
 
-        <SearchBox />
+        <SearchBox onSearchTask={handleSearchTask} />
         <TaskActions
           onModalActionClick={() => setIsModelOpen(true)}
           onDeleteAllTask={handleDeleteAllTask}
         />
-        <section className="py-4 sm:py-6 grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
-          {tasks?.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              onTaskEdit={handleEditTask}
-              onDeleteTask={handleDeleteTask}
-              onBookMark={handleBookMark}
-            />
-          ))}
-        </section>
+        {tasks.length > 0 ? (
+          <section className="py-4 sm:py-6 grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
+            {tasks?.map((task) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                onTaskEdit={handleEditTask}
+                onDeleteTask={handleDeleteTask}
+                onBookMark={handleBookMark}
+              />
+            ))}
+          </section>
+        ) : (
+          <h2 className="text-white text-center">No Task available</h2>
+        )}
       </div>
     </main>
   );

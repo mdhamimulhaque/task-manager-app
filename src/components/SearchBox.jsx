@@ -1,4 +1,13 @@
-const SearchBox = () => {
+import { useState } from "react";
+
+const SearchBox = ({ onSearchTask }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  function handleSearchValue() {
+    event.preventDefault();
+    onSearchTask(searchTerm);
+  }
+
   return (
     <section className="p-2 flex justify-center">
       <form>
@@ -8,11 +17,14 @@ const SearchBox = () => {
               type="search"
               className="z-20 block w-full bg-gray-800 px-4 py-2 pr-10 focus:outline-none"
               placeholder="Search Task"
+              value={searchTerm}
+              onChange={() => setSearchTerm(event.target.value)}
               required
             />
             <button
               type="submit"
               className="absolute right-2 top-0 h-full rounded-e-lg text-white md:right-4"
+              onClick={handleSearchValue}
             >
               <svg
                 className="h-4 w-4"
