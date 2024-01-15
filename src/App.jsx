@@ -7,26 +7,39 @@ import { defaultTaskData } from "./data/defaultTaskData";
 
 const TaskBoard = () => {
   const [tasks, setTasks] = useState([defaultTaskData]);
+  const [isModelOpen, setIsModelOpen] = useState(false);
 
-  function handleAddTask() {
-    console.log("clicked");
+  function handleTaskSave(newTaskValue) {
+    setTasks([...tasks, newTaskValue]);
+    setIsModelOpen(false);
   }
 
+  function handleModalClose() {
+    setIsModelOpen(false);
+  }
   return (
     <main className="p-4 bg-gray-700 h-full  ">
-      <section className="bg-gray-700 fixed z-20 top-0 left-0 w-full h-full">
-        <TaskModal />
-      </section>
+      {isModelOpen && (
+        <section className="bg-gray-700 fixed z-20 top-0 left-0 w-full h-full">
+          <TaskModal
+            onTaskSave={handleTaskSave}
+            onModalClose={handleModalClose}
+          />
+        </section>
+      )}
+
       <div className="container mx-auto border-2 border-gray-400 h-screen px-4 pb-4">
         <h2 className="text-4xl py-3 px-2 text-center text-white my-4 text-semibold">
           Task manager app
         </h2>
 
         <SearchBox />
-        <TaskActions onAddTask={handleAddTask} />
-        {tasks?.map((task) => (
-          <TaskCard key={task.id} task={task} />
-        ))}
+        <TaskActions onModalActionClick={() => setIsModelOpen(true)} />
+        <section className="py-4 sm:py-6 grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
+          {tasks?.map((task) => (
+            <TaskCard key={task.id} task={task} />
+          ))}
+        </section>
       </div>
     </main>
   );
